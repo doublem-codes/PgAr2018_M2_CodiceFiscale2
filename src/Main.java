@@ -3,7 +3,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-
         Reader lettore = new Reader();
 
         Element rootPerson = lettore.read("inputPersone.txt", "persona", true);
