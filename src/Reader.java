@@ -1,5 +1,5 @@
 import java.io.FileInputStream;
-
+import java.lang.System;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
@@ -58,6 +58,9 @@ public class Reader {
 							setup = false;
 						}
 						else {
+							//Element temp = new Element(startTag);
+
+
 							if(startTag.equals(HEADER) && hasHeader) {
 								eHeader = new Element(startTag);
 								for(int i = 0; i < xmlr.getAttributeCount(); i++) {
@@ -65,6 +68,7 @@ public class Reader {
 									eHeader.getAttributesHeader().add(attribute);
 									eHeader.getAttributesHeader().get(i).setValue(xmlr.getAttributeValue(i));
 								}
+
 								root.getElementsRoot().add(eHeader);
 								imAtHeader = true;
 							}
@@ -73,9 +77,10 @@ public class Reader {
 								genericItem = new Element(startTag);
 								for(int i = 0; i < xmlr.getAttributeCount(); i++) {
 									attribute = new Attribute(xmlr.getAttributeLocalName(i));
-									genericItem.getAttributesHeader().add(attribute);
-									genericItem.getAttributesHeader().get(i).setValue(xmlr.getAttributeValue(i));
+									eHeader.getAttributesHeader().add(attribute);
+									eHeader.getAttributesHeader().get(i).setValue(xmlr.getAttributeValue(i));
 								}
+								
 								eHeader.getElementsHeader().add(genericItem);
 							}
 						}

@@ -1,4 +1,4 @@
-
+import java.lang.System;
 public class Main {
 
     public static void main(String[] args) {
@@ -9,7 +9,7 @@ public class Main {
         Element rootComuni = lettore.read("comuni.txt", "comune", true);
         Element rootCodiciFiscali = lettore.read("codiciFiscali.txt", " ", false);
 
-
+        rootPerson.transfer();
         System.out.println("");
 
     }

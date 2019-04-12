@@ -1,12 +1,13 @@
 import java.util.ArrayList;
+import java.lang.System;
 
-public class Element{
+public class Element {
 
 	private String name;
 	private String character = null;
 
-	private ArrayList<Attribute> attributesRoot = new ArrayList();
-	private ArrayList<Element> elementsRoot = new ArrayList();
+	private ArrayList<Attribute> attributesRoot = new ArrayList<Attribute>();
+	private ArrayList<Element> elementsRoot = new ArrayList<Element>();
 
 	private ArrayList<Attribute> attributesHeader = new ArrayList();
 	private ArrayList<Element> elementsHeader = new ArrayList();
@@ -32,16 +33,14 @@ public class Element{
 		this.character = character;
 	}
 
-	/*
-	public ArrayList<Element> getSubElements() {
-		return subElements;
+	public void getRootname() {
+
 	}
 
-	public ArrayList<Attribute> getAttributes() {
-		return attributes;
-	}
 
-*/
+	public ArrayList<Element> getSubElementsRoot() {
+		return elementsRoot;
+	}
 
 	public ArrayList<Attribute> getAttributesRoot() {
 		return attributesRoot;
@@ -119,5 +118,28 @@ public class Element{
 
 	 */
 
-}
+	public ArrayList<Person> transfer() {
+
+		ArrayList<Person> personTransferCheck = new ArrayList<Person>();
+		Person person = new Person();
+
+			for (Element elementsRoot : elementsRoot) {
+
+				for (Element elementsHeader : elementsRoot.getElementsHeader()) {
+
+					for (Attribute att : elementsHeader.getAttributesHeader()) {
+						System.out.print(att.getName() + "test"+ att.getValue());
+					}
+					System.out.println(elementsHeader.getCharacter() + "test "+ elementsHeader.getName());
+				}
+
+				personTransferCheck.add(person);
+
+			}
+
+		return personTransferCheck;
+	}
+
+	}
+
 
