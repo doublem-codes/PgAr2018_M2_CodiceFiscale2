@@ -121,21 +121,78 @@ public class Element {
 	public ArrayList<Person> transfer() {
 
 		ArrayList<Person> personTransferCheck = new ArrayList<Person>();
-		Person person = new Person();
 
-			for (Element elementsRoot : elementsRoot) {
+		String firstName= "" ;
+		String lastName ="";
+		String sex= "" ;
+		String common="";
+		Date date = null;
+		boolean notAdd=false;
 
-				for (Element elementsHeader : elementsRoot.getElementsHeader()) {
+		for (Element elementsRoot : elementsRoot) {
 
-					for (Attribute att : elementsHeader.getAttributesHeader()) {
-						System.out.print(att.getName() + "test"+ att.getValue());
-					}
-					System.out.println(elementsHeader.getCharacter() + "test "+ elementsHeader.getName());
+			for (Element elementsHeader : elementsRoot.getElementsHeader()) {
+				String str =elementsHeader.getName();
+				switch (str){
+					case "nome":
+						firstName= elementsHeader.getCharacter();
+						break;
+					case "cognome":
+						lastName=elementsHeader.getCharacter();
+						break;
+					case "sesso":
+						String strTempSex = elementsHeader.getCharacter();
+						switch (strTempSex){
+							case "M":
+								sex = "M";
+								break;
+							case "F":
+								sex= "F";
+								break;
+							default:
+								notAdd=true;
+								break;
+
+						}
+						break;
+					case "comune_nascita":
+						common = elementsHeader.getCharacter();
+						break;
+					case "data_nascita":
+						String strTempDate = elementsHeader.getCharacter();
+						int day=0,month=0,year=0;
+						try {
+							year=Integer.parseInt(strTempDate.substring(0,4));
+							if (!(year<2019 && year>1900)){
+								year=-1;
+							}
+							month=Integer.parseInt(strTempDate.substring(5,7));
+							if (!(month>=1 && month <= 12)){
+								month=-1;
+							}
+							day=Integer.parseInt(strTempDate.substring(8,10));
+							if (!(day >= 1 && day <= 31)){
+								day=-1;
+							}
+						}catch (Exception e){
+							year=-1;
+							month=-1;
+							day=-1;
+						}
+						Date dateTemp = new Date();
+						dateTemp.setDate(year,month,day);
+						date=dateTemp;
+						break;
+
+					default:
+
 				}
-
-				personTransferCheck.add(person);
-
 			}
+			Person person = new Person();
+			person.setPerson(firstName,lastName,sex,common,date);
+			personTransferCheck.add(person);
+		}
+
 
 		return personTransferCheck;
 	}

@@ -1,16 +1,16 @@
 public class Person {
 
-    private String fistName ;
+    private String firstName ;
     private String lastName ;
-    private Sex sex ;
+    private String sex ;
     private String common;
     private Date date ;
     private String fiscalCode;
 
-    public void setPerson(String fistName, String lastName , Sex sex , String common, Date date ) {
-        this.fistName = fistName.toUpperCase();
+    public void setPerson(String firstName, String lastName , String sex , String common, Date date ) {
+        this.firstName = firstName.toUpperCase();
         this.lastName  = lastName.toUpperCase() ;
-        this.sex = sex;
+        this.sex=sex;
         this.common = common.toUpperCase().trim();
         this.date = date;
     }
@@ -24,14 +24,14 @@ public class Person {
     }
 
     public String getFistName() {
-        return fistName;
+        return firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public Sex getSex() {
+    public String getSex() {
         return sex;
     }
 
