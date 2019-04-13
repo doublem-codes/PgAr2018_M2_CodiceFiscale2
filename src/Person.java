@@ -1,37 +1,45 @@
 public class Person {
 
-    private String fistName ;
-    private String lastName ;
-    private Sex sex ;
+    private String firstName;
+    private String lastName;
+    private String sex;
     private String common;
-    private Date date ;
+    private int day;
+    private int month;
+    private int year;
     private String fiscalCode;
 
-    public void setPerson(String fistName, String lastName , Sex sex , String common, Date date ) {
-        this.fistName = fistName.toUpperCase();
-        this.lastName  = lastName.toUpperCase() ;
-        this.sex = sex;
-        this.common = common.toUpperCase().trim();
-        this.date = date;
+    public void person(){
+
     }
 
-    public void setFiscalCode(String fiscalCode){
-        this.fiscalCode = fiscalCode;
+    public void Person(String firstName, String lastName, String sex, String common, int day, int month, int year) {
+        this.firstName = firstName.toUpperCase();
+        this.lastName = lastName.toUpperCase();
+        this.sex = sex;
+        this.common = common;
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
 
     public String getFiscalCode() {
         return fiscalCode;
     }
 
-    public String getFistName() {
-        return fistName;
+    public void setFiscalCode(String fiscalCode) {
+        this.fiscalCode = fiscalCode;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public Sex getSex() {
+    public String getSex() {
         return sex;
     }
 
@@ -39,13 +47,16 @@ public class Person {
         return common;
     }
 
-    public Date getDate() {
-        return date;
+    public int getDay() {
+        return day;
     }
 
-
-    public String calcFiscalCode(){
-        String a = "inserirecodice";
-        return a;
+    public int getMonth() {
+        return month;
     }
+
+    public int getYear() {
+        return year;
+    }
+
 }

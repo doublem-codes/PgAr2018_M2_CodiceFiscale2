@@ -1,12 +1,12 @@
 public class Common {
-    int Id;
+    String Id;
     String name;
 
-    public int getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         Id = id;
     }
 
