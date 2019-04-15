@@ -5,11 +5,11 @@ public class Main {
 
         Reader lettore = new Reader();
 
-        Element rootPerson = lettore.read("inputPersone.txt", "persona", true);
-        Element rootComuni = lettore.read("comuni.txt", "comune", true);
+        //Element rootPerson = lettore.read("inputPersone.txt", "persona", true);
+        //Element rootComuni = lettore.read("comuni.txt", "comune", true);
         Element rootCodiciFiscali = lettore.read("codiciFiscali.txt", " ", false);
 
-        rootPerson.transfer();
+        //rootPerson.transfer();
         System.out.println("");
 
     }

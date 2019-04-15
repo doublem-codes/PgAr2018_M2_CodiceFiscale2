@@ -11,7 +11,7 @@ public class Person {
     private String fiscalCode;
 
 
-    public void Person(String firstName, String lastName, String sex, String common, Date date) {
+    public void setPerson(String firstName, String lastName, String sex, String common, Date date) {
         this.firstName = firstName.toUpperCase();
         this.lastName = lastName.toUpperCase();
         this.sex = sex;
