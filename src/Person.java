@@ -20,7 +20,7 @@ public class Person {
         this.month = date.getMounth();
         this.year = date.getYear();
     }
-    
+
     public void Person(String firstName, String lastName, String sex, String common, int day, int month, int year) {
         this.firstName = firstName.toUpperCase();
         this.lastName = lastName.toUpperCase();
