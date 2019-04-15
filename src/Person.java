@@ -18,6 +18,19 @@ public class Person {
         this.month = date.getMounth();
         this.year = date.getYear();
     }
+<<<<<<< HEAD
+=======
+
+    public void Person(String firstName, String lastName, String sex, String common, int day, int month, int year) {
+        this.firstName = firstName.toUpperCase();
+        this.lastName = lastName.toUpperCase();
+        this.sex = sex;
+        this.common = common;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+>>>>>>> 6c09e3d725baeeb4eace4b9315c9780066201d8d
 
     public String getFiscalCode() {
         return fiscalCode;
