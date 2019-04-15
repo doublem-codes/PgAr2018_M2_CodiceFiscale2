@@ -5,10 +5,11 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
+import java.lang.System;
 
 import java.io.FileOutputStream;
 
-public class System {
+public class SystemCode {
 
     //definition of static arrays for fiscal code conversion
     private static final char[] convMonth ={'A','B','C','D','E','H','L','M','P','R','S','T'};
