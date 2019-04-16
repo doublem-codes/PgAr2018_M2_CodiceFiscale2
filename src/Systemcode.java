@@ -183,29 +183,31 @@ public class Systemcode {
             System.out.println(e.getMessage());
         }
         try {
+            xmlWrite.writeCharacters("\n");
             xmlWrite.writeStartElement("output"); // apertura tag radice
             xmlWrite.writeStartElement("person");//apertura persone
             xmlWrite.writeAttribute("number", Integer.toString(arrayListPerson.size()));
+            xmlWrite.writeCharacters("\n");
             for (int i = 0; i < arrayListPerson.size(); i++) {//print all person
                 xmlWrite.writeStartElement("person");
                 xmlWrite.writeAttribute("id", Integer.toString(i));//print id of person
-                xmlWrite.writeStartElement("first name");
+                xmlWrite.writeStartElement("\nfirst name");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getFirstName());//print firstname of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("last name");
+                xmlWrite.writeStartElement("\nlast name");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getLastName());//print lastname of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("sex");
+                xmlWrite.writeStartElement("\nsex");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getSex());//print sex of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("birthplace");
+                xmlWrite.writeStartElement("\nbirthplace");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getCommon());//print birthplace of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("date of birth");
+                xmlWrite.writeStartElement("\ndate of birth");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getDay()+"-"+arrayListPerson.get(i)+
                                     "-"+arrayListPerson.get(i).getYear());//print date of birth of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("fiscal Code");
+                xmlWrite.writeStartElement("\nfiscal Code");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getFiscalCode());//print fiscalcode of person
                 xmlWrite.writeEndElement();
                 xmlWrite.writeEndElement();//close person
@@ -216,7 +218,7 @@ public class Systemcode {
             xmlWrite.writeStartElement("wrong");// open wrong fiscal code
             xmlWrite.writeAttribute("number", Integer.toString(wrongFiscalCode.size()));
             for (int i = 0; i < wrongFiscalCode.size(); i++) {//print all fiscalCode wrong
-                xmlWrite.writeStartElement("code wrong");
+                xmlWrite.writeStartElement("\ncode wrong\n");
                 xmlWrite.writeCharacters(wrongFiscalCode.get(i));
                 xmlWrite.writeEndElement();
             }
@@ -224,7 +226,7 @@ public class Systemcode {
             xmlWrite.writeStartElement("unpaired");//apro spaiati
             xmlWrite.writeAttribute("number", Integer.toString(unpairedFiscalCode.size()));
             for (int i = 0; i < unpairedFiscalCode.size(); i++) {//print all fiscalCode unpaired
-                xmlWrite.writeStartElement("code unpaired");
+                xmlWrite.writeStartElement("\ncode unpaired\n");
                 xmlWrite.writeCharacters(unpairedFiscalCode.get(i));
                 xmlWrite.writeEndElement();
             }
