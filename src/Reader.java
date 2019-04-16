@@ -4,18 +4,6 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
-/*
-<persone numero="1000">										rootPerson.name="persone"
-    <persona id="0">										rootPerson.attributes[0].name = "numero"
-        <nome>GIUSEPPE</nome>								rootPerson.attributes.value[0]="1000"
-        <cognome>MUSSO</cognome>							rootPerson.subElements[0].name = "persona"
-        <sesso>M</sesso>									rootPerson.subElements[0].attributes[0].name = "id"
-        <comune_nascita>ALCARA LI FUSI</comune_nascita>		rootPerson.subElements[0].attributes[0].value = "0"
-        <data_nascita>1940-04-27</data_nascita>					rootPerson.subElements[0].subElements[0].name = "nome"
-    </persona>													rootPerson.subElements[0].subElements[0].character="GIUSEPPE"
- </persone>														rootPerson.subElements[0].subElements[1].name = "cognome"
-
- */
 
 public class Reader {
 
@@ -23,9 +11,6 @@ public class Reader {
 
 	public Element read(String fileName, String strHeader, boolean hasHeader) {
 
-		//setup serve per controllare che il reader abbia visto il primo tag del file xml
-		//imAtRow serve per controllare di essere al tag row
-		//root viene inizializzato in cima e gli viene assegnato il valore del primo tag (ossia il root)
 
 		HEADER = strHeader;
 		boolean setup = true;
@@ -34,6 +19,7 @@ public class Reader {
 		Element eHeader = null;
 		Element genericItem = null;
 		Attribute attribute = null;
+		boolean temp = false;
 
 		try {
 			XMLInputFactory xmlif=XMLInputFactory.newInstance();
@@ -41,13 +27,20 @@ public class Reader {
 			while(xmlr.hasNext()) {
 				switch(xmlr.getEventType()) {
 					case XMLStreamConstants.START_DOCUMENT:
-						//mi assicuro che setup sia settata a true e imAtRow sia settata a false nel momento in cui inizio a leggere il documento
 						setup = true;
 						imAtHeader = false;
 						System.out.println("Start Read Doc " + fileName);
 						break;
 					case XMLStreamConstants.START_ELEMENT:
 						String startTag = xmlr.getLocalName();
+/*
+						if(startTag.equals("codice")){
+							temp = true;
+						}else{
+							temp=false;
+						}
+
+ */
 						if(setup) {
 							root = new Element(startTag);
 							for(int i = 0; i < xmlr.getAttributeCount(); i++) {
@@ -59,9 +52,7 @@ public class Reader {
 						}
 						else {
 							//Element temp = new Element(startTag);
-
-
-							if(startTag.equals(HEADER) && hasHeader) {
+							if(startTag.equals(HEADER)) {
 								eHeader = new Element(startTag);
 								for(int i = 0; i < xmlr.getAttributeCount(); i++) {
 									attribute = new Attribute(xmlr.getAttributeLocalName(i));
@@ -74,13 +65,13 @@ public class Reader {
 							}
 							else {
 								imAtHeader = false;
-								genericItem = new Element(startTag);
-								for(int i = 0; i < xmlr.getAttributeCount(); i++) {
-									attribute = new Attribute(xmlr.getAttributeLocalName(i));
-									eHeader.getAttributesHeader().add(attribute);
-									eHeader.getAttributesHeader().get(i).setValue(xmlr.getAttributeValue(i));
+									genericItem = new Element(startTag);
+									for (int i = 0; i < xmlr.getAttributeCount(); i++) {
+										attribute = new Attribute(xmlr.getAttributeLocalName(i));
+										eHeader.getAttributesHeader().add(attribute);
+										eHeader.getAttributesHeader().get(i).setValue(xmlr.getAttributeValue(i));
+
 								}
-								
 								eHeader.getElementsHeader().add(genericItem);
 							}
 						}
@@ -96,6 +87,7 @@ public class Reader {
 						break;
 					case XMLStreamConstants.CHARACTERS:
 						String character = xmlr.getText();
+
 						if(character.trim().length()>0)
 							if(setup) {
 								root.setCharacter(character);
