@@ -130,7 +130,7 @@ public class Systemcode {
     }
     private int findCommon(String common){
         int commonIndex = 0;
-        while(common.equals(arrayListCommon.get(commonIndex).name)){
+        while(common.equals(arrayListCommon.get(commonIndex).getName())){
             commonIndex++;
             if (commonIndex > arrayListCommon.size())return -1;
         }

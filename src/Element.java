@@ -78,7 +78,7 @@ public class Element {
 
 	public ArrayList<Person> transferPerson() {
 
-		ArrayList<Person> personTransferCheck = new ArrayList<Person>();
+		ArrayList<Person> personArrayList = new ArrayList<Person>();
 		String firstName = "";
 		String lastName = "";
 		String sex = "";
@@ -106,7 +106,7 @@ public class Element {
 								sex = "F";
 								break;
 							default:
-								isWrong=true;
+								isWrong = true;
 								break;
 
 						}
@@ -116,22 +116,22 @@ public class Element {
 						break;
 					case "data_nascita":
 						String strTempDate = elementsHeader.getCharacter();
-						int day=0 , month=0, year = 0;
+						int day = 0, month = 0, year = 0;
 						try {
 							year = Integer.parseInt(strTempDate.substring(0, 4));
 							if (!(year < 2019 && year > 1900)) {
-								isWrong=true;
+								isWrong = true;
 							}
 							month = Integer.parseInt(strTempDate.substring(5, 7));
 							if (!(month >= 1 && month <= 12)) {
-								isWrong=true;
+								isWrong = true;
 							}
 							day = Integer.parseInt(strTempDate.substring(8, 10));
 							if (!(day >= 1 && day <= 31)) {
-								isWrong=true;
+								isWrong = true;
 							}
 						} catch (Exception e) {
-							isWrong=true;
+							isWrong = true;
 						}
 						Date dateTemp = new Date();
 						dateTemp.setDate(year, month, day);
@@ -139,57 +139,94 @@ public class Element {
 						break;
 
 					default:
+						isWrong=true;
 				}
 			}
 			Person person = new Person();
-			person.setPerson(firstName, lastName, sex, common, date,isWrong);
-			personTransferCheck.add(person);
+			person.setPerson(firstName, lastName, sex, common, date, isWrong);
+			personArrayList.add(person);
+			isWrong=false;
 		}
-		return personTransferCheck;
+		return personArrayList;
 	}
 
-	public ArrayList<Common> transferCommon(){
-		ArrayList<Common> common = new ArrayList<>();
+	public ArrayList<Common> transferCommon() {
+		ArrayList<Common> commonArrayList = new ArrayList<>();
 
-		return common;
-	}
+		String id = "";
+		String idTemp ="";
+		String name = "";
+		boolean isWrong = false;
 
-	public ArrayList<String> transferCode(ArrayList<Common> arrayListCommon ){
-		ArrayList<String> code = new ArrayList<>();
+		for (Element elementsRoot : elementsRoot) {
+			for (Element elementsHeader : elementsRoot.getElementsHeader()) {
+				String str = elementsHeader.getName();
+				switch (str) {
+					case "codice":
+						id = elementsHeader.getCharacter();
+						idTemp = id;
+						try {
+							idTemp.substring(0, 3);
+						} catch (Exception e) {
+							isWrong = true;
+						}
+						if (! (idTemp.charAt(0) >= 'A' && idTemp.charAt(0) <= 'Z')){
+							isWrong=true;
+						}else{
+							for(int i=1; i<4;i++){
+								if(!(idTemp.charAt(i) >= '0' && idTemp.charAt(i) <= '9')){
+									isWrong=true;
+								}
+							}
 
-		return code;
-	}
+						}
+						break;
+					case "nome":
+						name = elementsHeader.getCharacter();
+						break;
+					default:
+						isWrong = true;
+						break;
 
-	public  boolean chechWrightCommon(Common common){
-		if (common.getId().length()==4)return true;
-		return false;
-	}
-
-	public boolean checkWrightFiscalCode(String pass ,String idCommon){
-		final char[] config = {'C','C','C','C','C','C','N','N','C','N','N','C','N','N','N','C'};
-		final char[] convMonth ={'A','B','C','D','E','H','L','M','P','R','S','T'};
-		String fiscalCode = pass.toUpperCase();
-		if(fiscalCode.length() != 16) return false;
-		for(int i = 0 ; i<16 ;i++) {
-			if (config[i] == 'C') {
-				if (fiscalCode.charAt(i) > 'Z' && fiscalCode.charAt(i) < 'A') return false;
-			} else {//config[i] == 'N'
-				if (fiscalCode.charAt(i) > '9' && fiscalCode.charAt(i) < '0') return false;
+				}
 			}
+			Common common = new Common();
+			common.setCommon(id,name,isWrong);
+			commonArrayList.add(common);
+			isWrong=false;
 		}
-		boolean bool = false;
-		for(int i = 0;i < convMonth.length;i++ ){
-			if (fiscalCode.charAt(8) != convMonth[i]) {
-				bool = true;
-				break;
-			}
-		}
-		if (bool)return false;
-		if( !fiscalCode.substring(11,14).equals(idCommon))return false;
-		if (fiscalCode.charAt(15) < 'A' || fiscalCode.charAt(15) > 'Z') return false;
-		return true;
+		return commonArrayList;
 	}
+
+	public ArrayList<String> transferCode () {
+		ArrayList<String> codeArrayList = new ArrayList<>();
+		String fiscalCode = "";
+		boolean isWrong = false;
+
+		for (Element elementsRoot : elementsRoot) {
+
+				String str = elementsRoot.getName();
+				switch (str) {
+					case "codice":
+						fiscalCode= elementsRoot.getCharacter();
+						break;
+					default:
+						isWrong=true;
+						break;
+
+				}
+				if(!isWrong){
+					codeArrayList.add(fiscalCode);
+					isWrong=false;
+				}
+
+
+			}
+		return codeArrayList;
+		}
+
 
 }
+
 
 

@@ -1,13 +1,22 @@
 public class Common {
-    String Id;
-    String name;
+    private String id;
+    private String name;
+    private boolean isWrong;
+
+    public boolean isWrong() {
+        return isWrong;
+    }
+
+    public void setWrong(boolean wrong) {
+        isWrong = wrong;
+    }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        id = id;
     }
 
     public String getName() {
@@ -17,4 +26,12 @@ public class Common {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setCommon(String id, String name, boolean isWrong){
+        this.id=id;
+        this.name=name;
+        this.isWrong=isWrong;
+
+    }
+
 }

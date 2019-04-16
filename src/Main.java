@@ -1,4 +1,6 @@
 import java.lang.System;
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -10,6 +12,14 @@ public class Main {
         Element rootPerson = lettore.read("inputPersone.txt", "persona", true);
 
 
+        rootCodeFiscal.transferCode();
+        ArrayList<Common> commonArrayList = new ArrayList<>() ;
+        commonArrayList = rootCommon.transferCommon();
+        for (int i =0; i<commonArrayList.size();i++){
+            if(commonArrayList.get(i).isWrong()){
+                System.out.println(commonArrayList.get(i).getName());
+            }
+        }
         System.out.println();
 
     }

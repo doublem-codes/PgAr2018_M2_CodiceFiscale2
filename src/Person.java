@@ -20,15 +20,7 @@ public class Person {
         this.year = date.getYear();
         this.isWrong=isWrong;
     }
-    public void Person(String firstName, String lastName, String sex, String common, int day, int month, int year) {
-        this.firstName = firstName.toUpperCase();
-        this.lastName = lastName.toUpperCase();
-        this.sex = sex;
-        this.common = common;
-        this.day = day;
-        this.month = month;
-        this.year = year;
-    }
+
 
 
     public String getFiscalCode() {

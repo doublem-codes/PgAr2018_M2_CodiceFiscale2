@@ -34,7 +34,7 @@ public class SystemCode {
 
     private int checkCommon(String code){
         int commonIndex = 0;
-        while(code.equals(arrayListCommon.get(commonIndex).name)){
+        while(code.equals(arrayListCommon.get(commonIndex).getName())){
             commonIndex++;
             if (commonIndex>=arrayListCommon.size())return -1;
         }
