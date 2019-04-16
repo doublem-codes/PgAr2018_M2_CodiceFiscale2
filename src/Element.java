@@ -76,49 +76,6 @@ public class Element {
 	}
 
 
-
-/*
-	public void setSubElements(ArrayList<Element> subElements) {
-		this.subElements = subElements;
-	}
-	 */
-
-	/*
-	public void setAttributes(ArrayList<Attribute> attributes) {
-		this.attributes = attributes;
-	}
-	 */
-
-	/*
-	public void printOnConsole() {
-
-		System.out.println("\n\n----------------------XML---------------------------");
-    	System.out.print("<" + name);
-    	for(Attribute att : attributes ) {
-			System.out.print(" " + att.getName() + "=" + "\"" + att.getValue() + "\"");
-		}
-		System.out.println(">");
-    	for(Element _row : subElements) {
-    		System.out.print("\t<" + _row.getName());
-    		for(Attribute att : _row.getAttributes()) {
-    			System.out.print(" " + att.getName() + "=" + "\"" + att.getValue() + "\"");
-    		}
-    		System.out.println(">");
-    		for (Element _genericItem : _row.getSubElements()) {
-    			System.out.print("\t\t<" + _genericItem.getName());
-    			for(Attribute att : _genericItem.getAttributes()) {
-        			System.out.print(" " + att.getName() + "=" + "\"" + att.getValue() + "\"");
-        		}
-        		System.out.println(">" + _genericItem.getCharacter() + "</" + _genericItem.getName() + ">");
-    		}
-    		System.out.println("\t</" + _row.getName() + ">");
-    	}
-    	System.out.println("</" + name + ">");
-	}
-
-
-	 */
-
 	public ArrayList<Person> transferPerson() {
 
 		ArrayList<Person> personTransferCheck = new ArrayList<Person>();
@@ -127,7 +84,7 @@ public class Element {
 		String sex = "";
 		String common = "";
 		Date date = null;
-		boolean notAdd = false;
+		boolean isWrong = false;
 
 		for (Element elementsRoot : elementsRoot) {
 			for (Element elementsHeader : elementsRoot.getElementsHeader()) {
@@ -149,7 +106,7 @@ public class Element {
 								sex = "F";
 								break;
 							default:
-								notAdd = true;
+								isWrong=true;
 								break;
 
 						}
@@ -159,24 +116,22 @@ public class Element {
 						break;
 					case "data_nascita":
 						String strTempDate = elementsHeader.getCharacter();
-						int day, month, year = 0;
+						int day=0 , month=0, year = 0;
 						try {
 							year = Integer.parseInt(strTempDate.substring(0, 4));
 							if (!(year < 2019 && year > 1900)) {
-								year = -1;
+								isWrong=true;
 							}
 							month = Integer.parseInt(strTempDate.substring(5, 7));
 							if (!(month >= 1 && month <= 12)) {
-								month = -1;
+								isWrong=true;
 							}
 							day = Integer.parseInt(strTempDate.substring(8, 10));
 							if (!(day >= 1 && day <= 31)) {
-								day = -1;
+								isWrong=true;
 							}
 						} catch (Exception e) {
-							year = -1;
-							month = -1;
-							day = -1;
+							isWrong=true;
 						}
 						Date dateTemp = new Date();
 						dateTemp.setDate(year, month, day);
@@ -187,11 +142,9 @@ public class Element {
 				}
 			}
 			Person person = new Person();
-			person.setPerson(firstName, lastName, sex, common, date);
+			person.setPerson(firstName, lastName, sex, common, date,isWrong);
 			personTransferCheck.add(person);
 		}
-
-
 		return personTransferCheck;
 	}
 

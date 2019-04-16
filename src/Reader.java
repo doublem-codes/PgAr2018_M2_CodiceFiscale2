@@ -33,14 +33,6 @@ public class Reader {
 						break;
 					case XMLStreamConstants.START_ELEMENT:
 						String startTag = xmlr.getLocalName();
-/*
-						if(startTag.equals("codice")){
-							temp = true;
-						}else{
-							temp=false;
-						}
-
- */
 						if(setup) {
 							root = new Element(startTag);
 							for(int i = 0; i < xmlr.getAttributeCount(); i++) {

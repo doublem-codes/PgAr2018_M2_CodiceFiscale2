@@ -5,11 +5,12 @@ public class Person {
     private String sex ;
     private String common;
     private String fiscalCode;
+    private boolean isWrong;
     private int day;
     private int month;
     private int year;
 
-    public void setPerson(String firstName, String lastName, String sex, String common, Date date) {
+    public void setPerson(String firstName, String lastName, String sex, String common, Date date, boolean isWrong) {
         this.firstName = firstName.toUpperCase();
         this.lastName = lastName.toUpperCase();
         this.sex = sex;
@@ -17,6 +18,7 @@ public class Person {
         this.day = date.getDay();
         this.month = date.getMounth();
         this.year = date.getYear();
+        this.isWrong=isWrong;
     }
     public void Person(String firstName, String lastName, String sex, String common, int day, int month, int year) {
         this.firstName = firstName.toUpperCase();

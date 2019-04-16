@@ -9,12 +9,6 @@ public class Main {
         Element rootCodeFiscal = lettore.read("codiciFiscali.txt", "codice", false);
         Element rootPerson = lettore.read("inputPersone.txt", "persona", true);
 
-        //systemcode.arrayListCommon = rootCommon.transferCommon();
-        //systemcode.rightFiscalCode = rootCodeFiscal.transferCode(systemcode.arrayListCommon);
-        //systemcode.arrayListPerson = rootPerson.transferPerson();
-
-        //systemcode.fiscalCodePerson();
-        //systemcode.writeXmlOutput("codePerson.xml","utf-8");
 
         System.out.println();
 
