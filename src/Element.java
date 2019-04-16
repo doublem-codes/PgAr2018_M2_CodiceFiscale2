@@ -219,8 +219,6 @@ public class Element {
 					codeArrayList.add(fiscalCode);
 					isWrong=false;
 				}
-
-
 			}
 		return codeArrayList;
 		}
