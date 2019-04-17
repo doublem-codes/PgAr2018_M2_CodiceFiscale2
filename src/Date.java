@@ -14,7 +14,7 @@ public class Date {
         this.day = day;
     }
 
-    public int getMounth() {
+    public int getMonth() {
         return month;
     }
 

@@ -1,25 +1,20 @@
 import java.lang.System;
-import java.util.ArrayList;
-
 public class Main {
 
     public static void main(String[] args) {
-
-        Reader lettore = new Reader();
         Systemcode systemcode= new Systemcode();
+        Reader lettore = new Reader();
+
         Element rootCommon = lettore.read("comuni.txt", "comune", true);
         Element rootCodeFiscal = lettore.read("codiciFiscali.txt", "codice", false);
         Element rootPerson = lettore.read("inputPersone.txt", "persona", true);
 
+        systemcode.setArrayListCommon(rootCommon.transferCommon());
+        systemcode.setArrayFiscalCode(rootCodeFiscal.transferCode());
+        systemcode.setArrayListPerson(rootPerson.transferPerson());
 
-        rootCodeFiscal.transferCode();
-        ArrayList<Common> commonArrayList = new ArrayList<>() ;
-        commonArrayList = rootCommon.transferCommon();
-        for (int i =0; i<commonArrayList.size();i++){
-            if(commonArrayList.get(i).isWrong()){
-                System.out.println(commonArrayList.get(i).getName());
-            }
-        }
+        //systemcode.fiscalCodePerson();
+        systemcode.writeXmlOutput2();
         systemcode.writeXmlOutput("codePerson.xml","utf-8");
         System.out.println();
 
