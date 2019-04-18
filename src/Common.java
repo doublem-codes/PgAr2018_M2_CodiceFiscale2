@@ -33,5 +33,4 @@ public class Common {
         this.isWrong=isWrong;
 
     }
-
 }

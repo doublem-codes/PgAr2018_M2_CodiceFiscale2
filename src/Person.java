@@ -16,16 +16,13 @@ public class Person {
         this.sex = sex;
         this.common = common;
         this.day = date.getDay();
-        this.month = date.getMonth();
+        this.month = date.getMounth();
         this.year = date.getYear();
         this.isWrong=isWrong;
     }
-
     public boolean getIsWrong() {
         return isWrong;
     }
-
-
     public String getFiscalCode() {
         return fiscalCode;
     }

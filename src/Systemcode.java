@@ -2,13 +2,11 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-public class Systemcode {
 
+public class Systemcode {
     // variable for xml_out
     private XMLOutputFactory xmlOut = null;
     private XMLStreamWriter xmlWrite = null;
-
     //array list of all system
     private ArrayList<Person> arrayListPerson =new ArrayList<>();
     private ArrayList<Person> wrongListPerson =new ArrayList<>();
@@ -16,13 +14,12 @@ public class Systemcode {
     private ArrayList<String> rightFiscalCode = new ArrayList<>();
     private ArrayList<String> wrongFiscalCode = new ArrayList<>();
     private ArrayList<String> unpairedFiscalCode = new ArrayList<>();
-
     //definition of static arrays for fiscal code conversion
     private static final int[] alfaD = {1,0,5,7,9,13,15,17,19,21,1,0,5,7,9,13,15,17,19,21,2,4,18,20,11,3,6,8,12,14,16,10,22,25,24,23};//conversion
-    private static final int[] alfaP = {0,1,2,3,4,5 ,6 ,7, 8, 9, 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};//conversion
+    // private static final int[] alfaP = {0,1,2,3,4,5 ,6 ,7, 8, 9,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};//conversion
     private static char[] config = {'C','C','C','C','C','C','N','N','C','N','N','C','N','N','N','C'}; // used to check the right composition of code
     private static final char[] convMonth ={'A','B','C','D','E','H','L','M','P','R','S','T'};// used to convertion month
-    private static final char[] omocodia ={ 'L','M','N','P','Q','R','S','T','U','V'};//used for canhe fiscal code in casse of omocodia
+    private static final char[] omocodia ={ 'L','M','N','P','Q','R','S','T','U','V'};//used for fiscal code in case of omocodia
 
     public void setArrayListPerson(ArrayList<Person> arrayListPerson) {
         this.arrayListPerson = arrayListPerson;
@@ -36,11 +33,12 @@ public class Systemcode {
         this.rightFiscalCode = rightFiscalCode;
     }
 
-    public void fiscalCodePerson(){
+    private static int der=0;
 
-        //checking fiscalcode compositi
+    public void fiscalCodePerson(){
+        //checking fiscalcode
         for (int i=0 ; i < rightFiscalCode.size();i++){
-            if(!checkWrightFiscalCode(rightFiscalCode.get(i))){
+            if(!checkWrightFiscalCode(rightFiscalCode.get(i))) {
                 wrongFiscalCode.add(rightFiscalCode.get(i));
                 rightFiscalCode.remove(i);
             }
@@ -52,8 +50,9 @@ public class Systemcode {
                 arrayListPerson.remove(index);
             }
         }
-        //checking right common of person
-        for (int index = 0;index < arrayListPerson.size(); index ++){
+        //checking right common of person and set fiscal code
+        for (int index = 0; index < arrayListPerson.size(); index ++){
+        der = index;//_____________________________________________________________-
             boolean check = false;
             for (Common common : arrayListCommon){
                 if (arrayListPerson.get(index).getCommon().equals(common.getName())){
@@ -61,11 +60,13 @@ public class Systemcode {
                     break;
                 }
             }
+
             if (!check){
                 wrongListPerson.add(arrayListPerson.get(index));
                 arrayListPerson.remove(index);
             }else{
                 // if all right calculate fiscalcode
+
                 String checking = calcFiscalCode(arrayListPerson.get(index));
                 if (checking.equals("ERROR")){
                     wrongListPerson.add(arrayListPerson.get(index));
@@ -76,10 +77,8 @@ public class Systemcode {
             }
         }
     }
-
     //used for generate the fiscal code
     private String calcFiscalCode(Person person) {
-
         String a , b ;
         int day = person.getDay();
         if (person.getSex().equals("F")) {
@@ -95,19 +94,15 @@ public class Systemcode {
                 b = Integer.toString(day % 10);
             }
         }
-
-        String y = a + b;
-
-        String partialCode = cutVocal(person.getLastName())+cutVocal(person.getFirstName())+Integer.toString(person.getYear()).substring(2, 3)+
-                             Character.toString(convMonth[person.getMonth() - 1])+y;
+        String partialCode = cutVocal(person.getLastName()) + cutVocal(person.getFirstName())+Integer.toString(person.getYear()).substring(2, 4)+
+                             (convMonth[person.getMonth() - 1]) + a + b ;
         int index = findCommon(person.getCommon());
         if (index !=-1){
             partialCode += arrayListCommon.get(index).getId();
         }else{
             return "ERROR ";
         }
-        String prova = calcCheckControl(partialCode.toCharArray());
-        String finalCode = partialCode + prova;
+        String finalCode = partialCode + calcCheckControl(partialCode);
 
         int cycle = 0;
         do{
@@ -116,16 +111,16 @@ public class Systemcode {
                 return "ERROR";
             }
             switch (checkFiscalCode(finalCode)){
-                case -1 ://fiscal code unpaired
+                case 0://fiscal code unpaired
                     unpairedFiscalCode.add(finalCode);
-                case 0://return fiscal Code
+                case 1://return fiscal Code
                     return finalCode;
-                case 1://fiscal code omocodia
+                default://fiscal code omocodia
                     char[] improveCode = finalCode.toCharArray();
                     int h;
-                    for (h = 15 ;h < 0 ; h-- ){
+                    for (h = 15 ; h < 0 ; h-- ){
                         if(improveCode[h] <= '9' && improveCode[h] >= '0'){
-                            improveCode[h] = omocodia[improveCode[h]];
+                            improveCode[h] = omocodia[improveCode[h] - 48];
                             break;
                         }
                     }
@@ -165,31 +160,67 @@ public class Systemcode {
                     }
                     break;
             }
-
         }
+
         switch (c - 1){
             case -1:
-                code[0] = vocal[0];
-                code[1] = vocal[1];
-                code[2] = vocal[2];
+                switch (a-1){
+                    case -1:
+                        code[0] = 'X';
+                        code[1] = 'X';
+                        code[2] = 'X';
+                     break;
+                    case 0:
+                        code[0] = vocal[0];
+                        code[1] = 'X';
+                        code[2] = 'X';
+                        break;
+                    case 1:
+                        code[0] = vocal[0];
+                        code[1] = vocal[1];
+                        code[2] = 'X';
+                        break;
+                    case 2:
+                        code[0] = vocal[0];
+                        code[1] = vocal[1];
+                        code[2] = vocal[2];
+                        break;
+                }
                 break;
             case 0:
-                code[0] = consonant[0];
-                code[1] = vocal[0];
-                code[2] = vocal[1];
+                switch (a-1) {
+                    case -1:
+                        code[0] = consonant[0];
+                        code[1] =  'X';
+                        code[2] = 'X';
+                        break;
+                    case 0:
+                        code[0] = consonant[0];
+                        code[1] =  vocal[0];
+                        code[2] = 'X';
+                        break;
+                    default:
+                        code[0] = consonant[0];
+                        code[1] = vocal[0];
+                        code[2] = vocal[1];
+                        break;
+                }
                 break;
             case 1:
                 code[0] = consonant[0];
                 code[1] = consonant[1];
-                code[2] = vocal[0];
+                if(a!=0) {
+                    code[2] = vocal[0];
+                }else {
+                    code[2]= 'X';
+                }
+
+
+
                 break;
             case 2:
                 code = consonant;
                 break;
-        }
-        for(int m = 0; m<3;m++)
-        if (code[m] >'Z'||code[m] <'A'){
-            code[m] = 'z';
         }
         return new String(code);
     }
@@ -206,85 +237,119 @@ public class Systemcode {
 
     //used for finf fiscal code in arraylist fiscal code
     private int checkFiscalCode(String code){
-        int check = 0;
-        for (String fiscalCode:rightFiscalCode){
-            if(fiscalCode.equals(code)){
+        int check =0;
+        for (int  i =0;i<rightFiscalCode.size();i++){
+            if(code.equals(rightFiscalCode.get(i))){
                 check++;
             }
         }
-        if (check == 0 ){return -1;}
-        else if(check == 1) {return 0;}
+        if (check == 0 ){return 0;}
+        else if(check == 1) {return 1;}
         else {return 1;}
     }
 
-    private static int j;
     //used for generate the last char of fiscalcode
-    private String calcCheckControl(char[] charCode) {
-        j++;
-        if(j==68){
-            System.out.println();
-        }
+    private char calcCheckControl( String code){
+        char[] charCode = code.toCharArray();
         int sumP = 0, sumD = 0;
+        for (int i = 0; i < charCode.length; i++) {
 
-        for (int i = 0; i < 14; i++) {
-
-            if ((i % 2) == 0) {
+            if (((i) % 2) == 0) {
                 if (charCode[i] <= 57 && charCode[i] >= 48) {
-                    sumP += alfaP[charCode[i] - 48];//hex
+                    int a = alfaD[charCode[i] - 48];
+                    sumD += a;//hex
                 } else {
-                    sumP += alfaP[charCode[i] - 55];//hex
+                    int a = alfaD[charCode[i] - 55];
+                    sumD += a;//hex
                 }
             } else {
                 if (charCode[i] <= 57 && charCode[i] >= 48) {
-                    sumD += alfaD[charCode[i] - 48];//hex
+                    sumP += charCode[i] - 48;//hex
                 } else {
-                    sumD += alfaD[charCode[i] - 55];//hex
+
+                    sumP += charCode[i] - 65;
                 }
             }
         }
-        return Character.toString((sumD + sumP) % 26 + 65);
+
+
+        int a = ((sumP + sumD) % 26);
+        char asdfghj = (char) (a+ 65);
+        return asdfghj;
     }
+
     //metod use for check the composition of fiscal code in arraylist
-    private boolean checkWrightFiscalCode(String pass){
-
-        String fiscalCode = pass.toUpperCase().trim();
-
+    private boolean checkWrightFiscalCode(String fiscalCode){
         if(fiscalCode.length() != 16) return false;
-
         for(int i = 0 ; i<16 ;i++) {
             if (config[i] == 'C') {
-                if (fiscalCode.charAt(i) > 'Z' && fiscalCode.charAt(i) < 'A') return false;
+                if (!(fiscalCode.charAt(i) <= 90 && fiscalCode.charAt(i) >= 65)){
+                    return false;
+                }
+
             } else {//config[i] == 'N'
-                if (fiscalCode.charAt(i) > '9' && fiscalCode.charAt(i) < '0') return false;
+                if (!(fiscalCode.charAt(i) <= 57 && fiscalCode.charAt(i) >= 48)){
+                    return false;
+                }
             }
         }
-
         boolean bool = false;
         for(char month : convMonth){
             if (fiscalCode.charAt(8) == month) {
-                bool = true;
+               /*switch (month) {
+                   case 'B':
+                       if(fiscalCode.charAt(9) > '3'){
+                           if(fiscalCode.charAt(9) > '6'&& fiscalCode.charAt(10) >'8') return false;
+                       }else{
+                           if(fiscalCode.charAt(9) > '2'&& fiscalCode.charAt(10) >'8') return false;
+                       }
+                       break;
+                   case 'A':
+                   case 'C':
+                   case 'E':
+                   case 'L':
+                   case 'M':
+                   case 'R':
+                   case 'T':
+                       if(fiscalCode.charAt(9) == '3'){
+                           if(fiscalCode.charAt(9) > '1') return false;
+                       }else{
+                           if (fiscalCode.charAt(9) != '1' &&fiscalCode.charAt(9) !='2')return false;
+                           if(fiscalCode.charAt(9) > '9' || fiscalCode.charAt(9) < '0') return false;
+                       }
+                        break;
+                   case 'H':
+                   case 'D':
+                   case 'P':
+                   case 'S':
+                       if(fiscalCode.charAt(9) == '3'){
+                           if(fiscalCode.charAt(9) > '0') return false;
+                       }else{
+                           if (fiscalCode.charAt(9) != '1' &&fiscalCode.charAt(9) !='2')return false;
+                           if(fiscalCode.charAt(9) > '9' || fiscalCode.charAt(9) < '0') return false;
+                       }
+                       break;
+               }*/
+                    bool = true;
                 break;
             }
         }
         if (!bool)return false;
-
         bool = false;
-        for (Common common : arrayListCommon){
-            if(fiscalCode.substring(11,14).equals(common.getId())){
+        for (int i = 0; i< arrayListCommon.size() ;i++){
+            if(fiscalCode.substring(11,15).equals(arrayListCommon.get(i).getId())){
                 bool = true;
                 break;
             }
         }
         if (!bool) return false;
 
-        if (fiscalCode.charAt(15) >= 'A' && 'Z' >= fiscalCode.charAt(15)) return false;
-
+        if(fiscalCode.charAt(15) != calcCheckControl(fiscalCode.substring(0,15)))return false;
         return true;
     }
 
     //metod to generate xml file out
     public void writeXmlOutput(String nameFile, String encoding) {
-        /*
         try {
             xmlOut = XMLOutputFactory.newInstance();
             xmlWrite = xmlOut.createXMLStreamWriter(new FileOutputStream(nameFile), encoding);
@@ -293,11 +358,9 @@ public class Systemcode {
             System.out.println("Error writer:");
             System.out.println(e.getMessage());
         }
-
-         */
         try {
             xmlWrite.writeStartElement("output"); // open tag xml
-            xmlWrite.writeStartElement("person right");//open right person
+            xmlWrite.writeStartElement("person wright");//open right person
             xmlWrite.writeAttribute("number", Integer.toString(arrayListPerson.size()));
             for (int i = 0; i < arrayListPerson.size(); i++) {//print all person
                 xmlWrite.writeStartElement("person");
@@ -315,7 +378,7 @@ public class Systemcode {
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getCommon());//print birthplace of person
                 xmlWrite.writeEndElement();
                 xmlWrite.writeStartElement("date of birth");
-                xmlWrite.writeCharacters(arrayListPerson.get(i).getDay()+"-"+arrayListPerson.get(i)+
+                xmlWrite.writeCharacters(arrayListPerson.get(i).getDay()+"-"+arrayListPerson.get(i).getMonth()+
                         "-"+arrayListPerson.get(i).getYear());//print date of birth of person
                 xmlWrite.writeEndElement();
                 xmlWrite.writeStartElement("fiscal Code");
@@ -381,8 +444,4 @@ public class Systemcode {
             System.out.println(e.getMessage());
         }
     }
-
-
-    }
-
-
+}

@@ -3,6 +3,7 @@ import java.lang.System;
 
 public class Element {
 
+
 	private String name;
 	private String character = null;
 
@@ -108,7 +109,6 @@ public class Element {
 							default:
 								isWrong = true;
 								break;
-
 						}
 						break;
 					case "comune_nascita":
@@ -119,7 +119,7 @@ public class Element {
 						int day = 0, month = 0, year = 0;
 						try {
 							year = Integer.parseInt(strTempDate.substring(0, 4));
-							if (!(year <= 2019 && year >= 1900)) {
+							if (!(year < 2019 && year > 1900)) {
 								isWrong = true;
 							}
 							month = Integer.parseInt(strTempDate.substring(5, 7));
@@ -127,7 +127,7 @@ public class Element {
 								isWrong = true;
 							}
 							day = Integer.parseInt(strTempDate.substring(8, 10));
-							if (!checkDayMonth(month,day,year)) {
+							if (!(day >= 1 && day <= 31)) {
 								isWrong = true;
 							}
 						} catch (Exception e) {
@@ -205,61 +205,26 @@ public class Element {
 
 		for (Element elementsRoot : elementsRoot) {
 
-				String str = elementsRoot.getName();
-				switch (str) {
-					case "codice":
-						fiscalCode= elementsRoot.getCharacter();
-						break;
-					default:
-						isWrong=true;
-						break;
+			String str = elementsRoot.getName();
+			switch (str) {
+				case "codice":
+					fiscalCode= elementsRoot.getCharacter();
+					break;
+				default:
+					isWrong=true;
+					break;
 
-				}
-				if(!isWrong){
-					codeArrayList.add(fiscalCode);
-					isWrong=false;
-				}
 			}
+			if(!isWrong){
+				codeArrayList.add(fiscalCode);
+				isWrong=false;
+			}
+
+
+		}
 		return codeArrayList;
-		}
-
-		private boolean checkDayMonth(int month, int day, int year){
-
-
-			switch (month){
-				case 1:
-					if(day<=31 && day>=0)	return true;
-				case 2:
-					if(( year>1584 && ( (year%400==0) || (year%4==0 && year%100!=0) ))){
-						if(day<=29 && day>=0)	return true;
-					}else {
-						if(day<=28 && day>=0)	return true;
-					}
-				case 3:
-					if(day<=31 && day>=0 )	return true;
-				case 4:
-					if (day<=30 && day>=0)	return true;
-				case 5:
-					if(day<=31 && day>=0)	return true;
-				case 6:
-					if(day<=30 && day>=0)	return true;
-				case 7:
-					if(day<=31 && day>=0)	return true;
-				case 8:
-					if(day<=31 && day>=0)	return true;
-				case 9:
-					if (day<= 30 && day>=0)	return true;
-				case 10:
-					if(day<=31 && day>=0)	return true;
-				case 11:
-					if (day<=30 && day>=0)	return true;
-				case 12:
-					if (day<=31 && day>=0)	return true;
-			}
-			return false;
-		}
+	}
 
 }
-
 
 
