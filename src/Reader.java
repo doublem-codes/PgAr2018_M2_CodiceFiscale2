@@ -9,7 +9,7 @@ public class Reader {
 
 	private String HEADER = " ";
 
-	public Element read(String fileName, String strHeader, boolean hasHeader) {
+	public Element read(String fileName, String strHeader) {
 
 
 		HEADER = strHeader;

@@ -29,6 +29,18 @@ public class Systemcode {
         this.arrayListCommon = arrayListCommon;
     }
 
+    public ArrayList<String> getRightFiscalCode() {
+        return rightFiscalCode;
+    }
+
+    public ArrayList<String> getWrongFiscalCode() {
+        return wrongFiscalCode;
+    }
+
+    public ArrayList<String> getUnpairedFiscalCode() {
+        return unpairedFiscalCode;
+    }
+
     /**
      * metodo controllo
      * @param rightFiscalCode fiscal code right
@@ -345,11 +357,9 @@ public class Systemcode {
         else if(check == 1) {return 1;}
         else {return 1;}
     }
-    private static int a=0;
+
     //used for generate the last char of fiscalcode
     private char calcCheckControl( String code){
-        a++;
-        System.out.println(a);
         char[] charCode = code.toCharArray();
         int sumP = 0, sumD = 0;
         for (int i = 0; i < charCode.length; i++) {
@@ -392,40 +402,6 @@ public class Systemcode {
         boolean bool = false;
         for(char month : convMonth){
             if (fiscalCode.charAt(8) == month) {
-               /*switch (month) {
-                   case 'B':
-                       if(fiscalCode.charAt(9) > '3'){
-                           if(fiscalCode.charAt(9) > '6'&& fiscalCode.charAt(10) >'8') return false;
-                       }else{
-                           if(fiscalCode.charAt(9) > '2'&& fiscalCode.charAt(10) >'8') return false;
-                       }
-                       break;
-                   case 'A':
-                   case 'C':
-                   case 'E':
-                   case 'L':
-                   case 'M':
-                   case 'R':
-                   case 'T':
-                       if(fiscalCode.charAt(9) == '3'){
-                           if(fiscalCode.charAt(9) > '1') return false;
-                       }else{
-                           if (fiscalCode.charAt(9) != '1' &&fiscalCode.charAt(9) !='2')return false;
-                           if(fiscalCode.charAt(9) > '9' || fiscalCode.charAt(9) < '0') return false;
-                       }
-                        break;
-                   case 'H':
-                   case 'D':
-                   case 'P':
-                   case 'S':
-                       if(fiscalCode.charAt(9) == '3'){
-                           if(fiscalCode.charAt(9) > '0') return false;
-                       }else{
-                           if (fiscalCode.charAt(9) != '1' &&fiscalCode.charAt(9) !='2')return false;
-                           if(fiscalCode.charAt(9) > '9' || fiscalCode.charAt(9) < '0') return false;
-                       }
-                       break;
-               }*/
                 bool = true;
                 break;
             }
@@ -445,7 +421,7 @@ public class Systemcode {
     //metod to generate xml file out
 
 
-    public void writeXmlOutput(String nameFile, String encoding) {
+    public boolean writeXmlOutput(String nameFile, String encoding) {
         try {
             xmlOut = XMLOutputFactory.newInstance();
             xmlWrite = xmlOut.createXMLStreamWriter(new FileOutputStream(nameFile), encoding);
@@ -534,10 +510,13 @@ public class Systemcode {
             xmlWrite.writeEndDocument(); //close document
             xmlWrite.flush(); // empty buffer
             xmlWrite.close(); // close all
+            return true;
+
         } catch (Exception e) {
 
             System.out.println("Error write");
             System.out.println(e.getMessage());
+            return false;
         }
     }
 }
