@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 import java.lang.System;
+import java.util.Calendar;
+/**
+ * descrizione:
+ *
+ */
 
 public class Element {
 
@@ -76,6 +81,10 @@ public class Element {
 		this.elementsHeader = elementsHeader;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 
 	public ArrayList<Person> transferPerson() {
 
@@ -127,7 +136,7 @@ public class Element {
 								isWrong = true;
 							}
 							day = Integer.parseInt(strTempDate.substring(8, 10));
-							if (!(day >= 1 && day <= 31)) {
+							if (!(checkMonthDay(month,day,year))) {
 								isWrong = true;
 							}
 						} catch (Exception e) {
@@ -225,6 +234,52 @@ public class Element {
 		return codeArrayList;
 	}
 
+	private boolean checkMonthDay(int month, int day, int year){
+		Calendar calendar = Calendar.getInstance();
+		switch (month){
+			case 1:
+				month= Calendar.JANUARY;
+				break;
+			case 2:
+				month= Calendar.FEBRUARY;
+				break;
+			case 3:
+				month = Calendar.MARCH;
+				break;
+			case 4:
+				month = Calendar.APRIL;
+				break;
+			case 5:
+				month=Calendar.MAY;
+				break;
+			case 6:
+				month=Calendar.JUNE;
+				break;
+			case 7:
+				month=Calendar.JULY;
+				break;
+			case 8:
+				month= Calendar.AUGUST;
+				break;
+			case 9:
+				month= Calendar.SEPTEMBER;
+				break;
+			case 10:
+				month=Calendar.OCTOBER;
+				break;
+			case 11:
+				month=Calendar.NOVEMBER;
+				break;
+			case 12:
+				month=Calendar.DECEMBER;
+				break;
+
+		}
+		calendar.set(year, month, day);
+		int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+		return day <= maxDay;
+	}
 }
 
 
