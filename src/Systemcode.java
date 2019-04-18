@@ -16,7 +16,7 @@ public class Systemcode {
     private ArrayList<String> unpairedFiscalCode = new ArrayList<>();
     //definition of static arrays for fiscal code conversion
     private static final int[] alfaD = {1,0,5,7,9,13,15,17,19,21,1,0,5,7,9,13,15,17,19,21,2,4,18,20,11,3,6,8,12,14,16,10,22,25,24,23};//conversion
-    // private static final int[] alfaP = {0,1,2,3,4,5 ,6 ,7, 8, 9,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};//conversion
+
     private static char[] config = {'C','C','C','C','C','C','N','N','C','N','N','C','N','N','N','C'}; // used to check the right composition of code
     private static final char[] convMonth ={'A','B','C','D','E','H','L','M','P','R','S','T'};// used to convertion month
     private static final char[] omocodia ={ 'L','M','N','P','Q','R','S','T','U','V'};//used for fiscal code in case of omocodia
@@ -29,30 +29,34 @@ public class Systemcode {
         this.arrayListCommon = arrayListCommon;
     }
 
+    /**
+     * metodo controllo
+     * @param rightFiscalCode fiscal code right
+     */
     public void setArrayFiscalCode(ArrayList<String> rightFiscalCode) {
         this.rightFiscalCode = rightFiscalCode;
     }
-
-    private static int der=0;
-
     public void fiscalCodePerson(){
         //checking fiscalcode
-        for (int i=0 ; i < rightFiscalCode.size();i++){
+        int size = rightFiscalCode.size();
+        for (int i=0 ; i < size;i++){
             if(!checkWrightFiscalCode(rightFiscalCode.get(i))) {
                 wrongFiscalCode.add(rightFiscalCode.get(i));
                 rightFiscalCode.remove(i);
+                size--;
             }
         }
         //checking arraylist person
-        for(int index = 0; index < arrayListPerson.size();index++){
+        int sizePerson =arrayListPerson.size();
+        for(int index = 0; index < sizePerson;index++){
             if(arrayListPerson.get(index).getIsWrong()){
                 wrongListPerson.add(arrayListPerson.get(index));
                 arrayListPerson.remove(index);
+                sizePerson--;
             }
         }
         //checking right common of person and set fiscal code
         for (int index = 0; index < arrayListPerson.size(); index ++){
-        der = index;//_____________________________________________________________-
             boolean check = false;
             for (Common common : arrayListCommon){
                 if (arrayListPerson.get(index).getCommon().equals(common.getName())){
@@ -94,8 +98,8 @@ public class Systemcode {
                 b = Integer.toString(day % 10);
             }
         }
-        String partialCode = cutVocal(person.getLastName()) + cutVocal(person.getFirstName())+Integer.toString(person.getYear()).substring(2, 4)+
-                             (convMonth[person.getMonth() - 1]) + a + b ;
+        String partialCode = cutVocalLastName(person.getLastName()) + cutVocalFisrtName(person.getFirstName())+Integer.toString(person.getYear()).substring(2, 4)+
+                (convMonth[person.getMonth() - 1]) + a + b ;
         int index = findCommon(person.getCommon());
         if (index !=-1){
             partialCode += arrayListCommon.get(index).getId();
@@ -129,13 +133,12 @@ public class Systemcode {
             }
         }while(true);
     }
-
-    //used for cut the vocal
-    private String cutVocal(String string) {
+    //firstname cut vocal
+    private String cutVocalFisrtName(String string) {
         char[] aux = string.toCharArray();
         char[] code = new char[3];
         char[] vocal = new char[3];
-        char[] consonant = new char[3];
+        char[] consonant = new char[4];
 
         int a = 0, c = 0;
         int i;
@@ -154,7 +157,7 @@ public class Systemcode {
                     }
                     break;
                 default:
-                    if (c < 3) {
+                    if (c < 4) {
                         consonant[c] = aux[i];
                         c++;
                     }
@@ -169,7 +172,7 @@ public class Systemcode {
                         code[0] = 'X';
                         code[1] = 'X';
                         code[2] = 'X';
-                     break;
+                        break;
                     case 0:
                         code[0] = vocal[0];
                         code[1] = 'X';
@@ -214,17 +217,113 @@ public class Systemcode {
                 }else {
                     code[2]= 'X';
                 }
-
-
-
                 break;
             case 2:
-                code = consonant;
+                code[0] = consonant[0];
+                code[1] = consonant[1];
+                code[2] = consonant[2];
+                break;
+            case 3:
+                code[0] = consonant[0];
+                code[1] = consonant[2];
+                code[2] = consonant[3];
                 break;
         }
         return new String(code);
     }
+    //lastname cut vocal
+    private String cutVocalLastName(String string) {
+        char[] aux = string.toCharArray();
+        char[] code = new char[3];
+        char[] vocal = new char[3];
+        char[] consonant = new char[3];
 
+        int a = 0, c = 0;
+        int i;
+        int lung = aux.length;
+
+        for (i = 0; i < lung; i++) {
+            switch (aux[i]) {
+                case 'A':
+                case 'E':
+                case 'I':
+                case 'O':
+                case 'U':
+                    if (a < 3) {
+                        vocal[a] = aux[i];
+                        a++;
+                    }
+                    break;
+                default:
+                    if (c < 3) {
+                        consonant[c] = aux[i];
+                        c++;
+                    }
+                    break;
+            }
+        }
+
+        switch (c - 1){
+            case -1:
+                switch (a-1){
+                    case -1:
+                        code[0] = 'X';
+                        code[1] = 'X';
+                        code[2] = 'X';
+                        break;
+                    case 0:
+                        code[0] = vocal[0];
+                        code[1] = 'X';
+                        code[2] = 'X';
+                        break;
+                    case 1:
+                        code[0] = vocal[0];
+                        code[1] = vocal[1];
+                        code[2] = 'X';
+                        break;
+                    case 2:
+                        code[0] = vocal[0];
+                        code[1] = vocal[1];
+                        code[2] = vocal[2];
+                        break;
+                }
+                break;
+            case 0:
+                switch (a-1) {
+                    case -1:
+                        code[0] = consonant[0];
+                        code[1] =  'X';
+                        code[2] = 'X';
+                        break;
+                    case 0:
+                        code[0] = consonant[0];
+                        code[1] =  vocal[0];
+                        code[2] = 'X';
+                        break;
+                    default:
+                        code[0] = consonant[0];
+                        code[1] = vocal[0];
+                        code[2] = vocal[1];
+                        break;
+                }
+                break;
+            case 1:
+                code[0] = consonant[0];
+                code[1] = consonant[1];
+                if(a!=0) {
+                    code[2] = vocal[0];
+                }else {
+                    code[2]= 'X';
+                }
+                break;
+            case 2:
+                code[0] = consonant[0];
+                code[1] = consonant[1];
+                code[2] = consonant[2];
+                break;
+        }
+        return new String(code);
+    }
     //used for find id common
     private int findCommon(String common){
         int commonIndex = 0;
@@ -234,7 +333,6 @@ public class Systemcode {
         }
         return commonIndex;
     }
-
     //used for finf fiscal code in arraylist fiscal code
     private int checkFiscalCode(String code){
         int check =0;
@@ -247,9 +345,11 @@ public class Systemcode {
         else if(check == 1) {return 1;}
         else {return 1;}
     }
-
+    private static int a=0;
     //used for generate the last char of fiscalcode
     private char calcCheckControl( String code){
+        a++;
+        System.out.println(a);
         char[] charCode = code.toCharArray();
         int sumP = 0, sumD = 0;
         for (int i = 0; i < charCode.length; i++) {
@@ -271,13 +371,9 @@ public class Systemcode {
                 }
             }
         }
-
-
         int a = ((sumP + sumD) % 26);
-        char asdfghj = (char) (a+ 65);
-        return asdfghj;
+        return (char) (a+ 65);
     }
-
     //metod use for check the composition of fiscal code in arraylist
     private boolean checkWrightFiscalCode(String fiscalCode){
         if(fiscalCode.length() != 16) return false;
@@ -330,7 +426,7 @@ public class Systemcode {
                        }
                        break;
                }*/
-                    bool = true;
+                bool = true;
                 break;
             }
         }
@@ -343,12 +439,12 @@ public class Systemcode {
             }
         }
         if (!bool) return false;
-
         if(fiscalCode.charAt(15) != calcCheckControl(fiscalCode.substring(0,15)))return false;
         return true;
     }
-
     //metod to generate xml file out
+
+
     public void writeXmlOutput(String nameFile, String encoding) {
         try {
             xmlOut = XMLOutputFactory.newInstance();

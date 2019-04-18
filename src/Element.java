@@ -128,7 +128,7 @@ public class Element {
 						int day = 0, month = 0, year = 0;
 						try {
 							year = Integer.parseInt(strTempDate.substring(0, 4));
-							if (!(year < 2019 && year > 1900)) {
+							if (!(year <= 2019 && year > 1900)) {
 								isWrong = true;
 							}
 							month = Integer.parseInt(strTempDate.substring(5, 7));
