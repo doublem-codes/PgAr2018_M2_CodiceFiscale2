@@ -12,9 +12,7 @@ public class Main {
         systemcode.setArrayListCommon(rootCommon.transferCommon());
         systemcode.setArrayFiscalCode(rootCodeFiscal.transferCode());
         systemcode.setArrayListPerson(rootPerson.transferPerson());
-
-        //systemcode.fiscalCodePerson();
-        systemcode.writeXmlOutput2();
+        
         systemcode.writeXmlOutput("codePerson.xml","utf-8");
         System.out.println();
 

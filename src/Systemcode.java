@@ -383,9 +383,6 @@ public class Systemcode {
     }
 
 
-    public void writeXmlOutput2() {
-    }
-
     }
 
 
