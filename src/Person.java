@@ -10,13 +10,22 @@ public class Person {
     private int month;
     private int year;
 
+    /**
+     *
+     * @param firstName : name of the person
+     * @param lastName : last name of the person
+     * @param sex : M or F
+     * @param common : city of the person
+     * @param date : date of the person
+     * @param isWrong : true: if some of the upper parameters during the reading are wrong
+     */
     public void setPerson(String firstName, String lastName, String sex, String common, Date date, boolean isWrong) {
         this.firstName = firstName.toUpperCase();
         this.lastName = lastName.toUpperCase();
         this.sex = sex;
         this.common = common;
         this.day = date.getDay();
-        this.month = date.getMounth();
+        this.month = date.getMonth();
         this.year = date.getYear();
         this.isWrong=isWrong;
     }

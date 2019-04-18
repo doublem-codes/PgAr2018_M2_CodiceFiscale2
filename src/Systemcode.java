@@ -30,8 +30,25 @@ public class Systemcode {
     }
 
     /**
+     *
+     * This three getters are used from the main to print some Insights of the rightFiscalCode wrongFiscalCode and unpairedFiscalCode
+     */
+
+    public ArrayList<String> getRightFiscalCode() {
+        return rightFiscalCode;
+    }
+
+    public ArrayList<String> getWrongFiscalCode() {
+        return wrongFiscalCode;
+    }
+
+    public ArrayList<String> getUnpairedFiscalCode() {
+        return unpairedFiscalCode;
+    }
+
+    /**
      * metodo controllo
-     * @param rightFiscalCode fiscal code right
+     * @param rightFiscalCode : fiscal code right
      */
     public void setArrayFiscalCode(ArrayList<String> rightFiscalCode) {
         this.rightFiscalCode = rightFiscalCode;
@@ -408,7 +425,12 @@ public class Systemcode {
     }
     //metod to generate xml file out
 
-
+    /**
+     *
+     * @param nameFile : the file in xml format in the folder
+     * @param encoding : the printing encoding
+     * @return
+     */
     public boolean writeXmlOutput(String nameFile, String encoding) {
         try {
             xmlOut = XMLOutputFactory.newInstance();

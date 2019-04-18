@@ -9,6 +9,32 @@ public class Reader {
 
 	private String HEADER = " ";
 
+	/**
+	 *
+	 * @param fileName : it contains the string of the xml file to read
+	 * @param strHeader: it contains the string of the header
+	 *                 		codiciFiscali.txt: <codice>RRAMHL24M31L584H</codice>
+	 *                 		strHeader: codice
+	 *
+	 *                 		comuni.txt :   <comune>
+	 *    									 <nome>ABANO TERME</nome>
+	 *    									 <codice>A001</codice>
+	 *   									</comune>
+	 *   					strHeader: comune
+	 *
+	 *   		       		inputPersone.txt: <persona id="0">
+	 *         									<nome>GIUSEPPE</nome>
+	 *        									<cognome>MUSSO</cognome>
+	 *         									<sesso>M</sesso>
+	 *         									<comune_nascita>ALCARA LI FUSI</comune_nascita>
+	 *         									<data_nascita>1940-04-27</data_nascita>
+	 *     										</persona>
+	 *     					strHeader: persona
+	 *
+	 *
+	 * @return : the element you are reading
+	 */
+
 	public Element read(String fileName, String strHeader) {
 
 
