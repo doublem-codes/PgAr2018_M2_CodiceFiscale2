@@ -407,6 +407,46 @@ public class Systemcode {
         boolean bool = false;
         for(char month : convMonth){
             if (fiscalCode.charAt(8) == month) {
+                switch (month) {
+                    case 'B':
+                        if (Integer.valueOf(fiscalCode.substring(6, 8)) % 4 == 0) {
+                            if (!((Integer.valueOf(fiscalCode.substring(9, 11)) > 0 && Integer.valueOf(fiscalCode.substring(9, 11)) < 30)
+                                    || (Integer.valueOf(fiscalCode.substring(9, 11)) > 40
+                                    && Integer.valueOf(fiscalCode.substring(9, 11)) < 70))) {
+                                return false;
+                            }
+                        } else {
+                            if (!((Integer.valueOf(fiscalCode.substring(9, 11)) > 0 && Integer.valueOf(fiscalCode.substring(9, 11)) < 29)
+                                    || (Integer.valueOf(fiscalCode.substring(9, 11)) > 40
+                                    && Integer.valueOf(fiscalCode.substring(9, 11)) < 69))) {
+                                return false;
+                            }
+                        }
+                        break;
+                    case 'A':
+                    case 'C':
+                    case 'E':
+                    case 'L':
+                    case 'M':
+                    case 'R':
+                    case 'T':
+                        if (!((Integer.valueOf(fiscalCode.substring(9, 11)) > 0 && Integer.valueOf(fiscalCode.substring(9, 11)) < 32)
+                                || (Integer.valueOf(fiscalCode.substring(9, 11)) > 40
+                                && Integer.valueOf(fiscalCode.substring(9, 11)) < 72))) {
+                            return false;
+                        }
+                        break;
+                    case 'H':
+                    case 'D':
+                    case 'P':
+                    case 'S':
+                        if (!((Integer.valueOf(fiscalCode.substring(9, 11)) > 0 && Integer.valueOf(fiscalCode.substring(9, 11)) < 31)
+                                || (Integer.valueOf(fiscalCode.substring(9, 11)) > 40
+                                && Integer.valueOf(fiscalCode.substring(9, 11)) < 71))) {
+                            return false;
+                        }
+                        break;
+                }
                 bool = true;
                 break;
             }
