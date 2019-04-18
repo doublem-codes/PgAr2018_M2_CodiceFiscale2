@@ -1,8 +1,7 @@
 import java.util.ArrayList;
-import java.lang.System;
 import java.util.Calendar;
 /**
- * descrizione:
+ * It contains the element of the reader
  *
  */
 
@@ -16,9 +15,8 @@ public class Element {
 	private ArrayList<Attribute> attributesRoot = new ArrayList<Attribute>();
 	private ArrayList<Element> elementsRoot = new ArrayList<Element>();
 
-	private ArrayList<Attribute> attributesHeader = new ArrayList();
-	private ArrayList<Element> elementsHeader = new ArrayList();
-
+	private ArrayList<Attribute> attributesHeader = new ArrayList<Attribute>();
+	private ArrayList<Element> elementsHeader = new ArrayList<Element>();
 
 	public Element(String name) {
 		this.name = name;
@@ -26,10 +24,6 @@ public class Element {
 
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getCharacter() {
@@ -40,50 +34,26 @@ public class Element {
 		this.character = character;
 	}
 
-	public void getRootname() {
-
-	}
-
-
-	public ArrayList<Element> getSubElementsRoot() {
-		return elementsRoot;
-	}
-
 	public ArrayList<Attribute> getAttributesRoot() {
 		return attributesRoot;
-	}
-
-	public void setAttributesRoot(ArrayList<Attribute> attributesRoot) {
-		this.attributesRoot = attributesRoot;
 	}
 
 	public ArrayList<Element> getElementsRoot() {
 		return elementsRoot;
 	}
 
-	public void setElementsRoot(ArrayList<Element> elementsRoot) {
-		this.elementsRoot = elementsRoot;
-	}
-
 	public ArrayList<Attribute> getAttributesHeader() {
 		return attributesHeader;
-	}
-
-	public void setAttributesHeader(ArrayList<Attribute> attributesHeader) {
-		this.attributesHeader = attributesHeader;
 	}
 
 	public ArrayList<Element> getElementsHeader() {
 		return elementsHeader;
 	}
 
-	public void setElementsHeader(ArrayList<Element> elementsHeader) {
-		this.elementsHeader = elementsHeader;
-	}
 
 	/**
-	 *
-	 * @return
+	 *if the Person has some parameters wrong it puts a boolean variable called isWrong to true
+	 * @return : returns an ArrayList of the Person read from the xml file
 	 */
 
 	public ArrayList<Person> transferPerson() {
@@ -159,6 +129,10 @@ public class Element {
 		return personArrayList;
 	}
 
+	/**
+	 *if the Common Code is wrong it puts a boolean variable called isWrong to true
+	 * @return : returns an ArrayList of the City read from the xml file
+	 */
 	public ArrayList<Common> transferCommon() {
 		ArrayList<Common> commonArrayList = new ArrayList<>();
 
@@ -207,6 +181,10 @@ public class Element {
 		return commonArrayList;
 	}
 
+	/**
+	 * if the FiscalCode is wrong it puts a boolean variable called isWrong to true
+	 * @return : returns an ArrayList of the codeFiscal read from the xml file
+	 */
 	public ArrayList<String> transferCode () {
 		ArrayList<String> codeArrayList = new ArrayList<>();
 		String fiscalCode = "";
@@ -234,6 +212,13 @@ public class Element {
 		return codeArrayList;
 	}
 
+	/**
+	 *
+	 * @param month: month of the person
+	 * @param day: day of the person
+	 * @param year: of the person
+	 * @return true: if the day related to the month is correct false: if the day is wrong
+	 */
 	private boolean checkMonthDay(int month, int day, int year){
 		Calendar calendar = Calendar.getInstance();
 		switch (month){

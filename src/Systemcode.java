@@ -29,18 +29,6 @@ public class Systemcode {
         this.arrayListCommon = arrayListCommon;
     }
 
-    public ArrayList<String> getRightFiscalCode() {
-        return rightFiscalCode;
-    }
-
-    public ArrayList<String> getWrongFiscalCode() {
-        return wrongFiscalCode;
-    }
-
-    public ArrayList<String> getUnpairedFiscalCode() {
-        return unpairedFiscalCode;
-    }
-
     /**
      * metodo controllo
      * @param rightFiscalCode fiscal code right

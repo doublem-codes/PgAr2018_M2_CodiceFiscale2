@@ -28,7 +28,6 @@ public class Main {
         }else{
             System.out.println("File not saved !" + "Some error has occurred");
         }
-        System.out.println();
 
     }
 }
