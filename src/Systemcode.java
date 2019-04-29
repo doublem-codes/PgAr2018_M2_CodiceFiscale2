@@ -482,75 +482,75 @@ public class Systemcode {
         }
         try {
             xmlWrite.writeStartElement("output"); // open tag xml
-            xmlWrite.writeStartElement("person_wright");//open right person
-            xmlWrite.writeAttribute("number", Integer.toString(arrayListPerson.size()));
+            xmlWrite.writeStartElement("persone");//open right person
+            xmlWrite.writeAttribute("numero", Integer.toString(arrayListPerson.size()));
             for (int i = 0; i < arrayListPerson.size(); i++) {//print all person
-                xmlWrite.writeStartElement("person");
+                xmlWrite.writeStartElement("persona");
                 xmlWrite.writeAttribute("id", Integer.toString(i));//print id of person
-                xmlWrite.writeStartElement("first_name");
+                xmlWrite.writeStartElement("nome");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getFirstName());//print firstname of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("last_name");
+                xmlWrite.writeStartElement("cognome");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getLastName());//print lastname of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("sex");
+                xmlWrite.writeStartElement("sesso");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getSex());//print sex of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("birthplace");
+                xmlWrite.writeStartElement("comune_nascita");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getCommon());//print birthplace of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("date_of_birth");
+                xmlWrite.writeStartElement("data_nascita");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getDay()+"-"+arrayListPerson.get(i).getMonth()+
                         "-"+arrayListPerson.get(i).getYear());//print date of birth of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("fiscal_Code");
+                xmlWrite.writeStartElement("codice_fiscale");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getFiscalCode());//print fiscalcode of person
                 xmlWrite.writeEndElement();
                 xmlWrite.writeEndElement();//close person
             }
             xmlWrite.writeEndElement(); //close right person
 
-            xmlWrite.writeStartElement("person_wrong");//open wrong person
-            xmlWrite.writeAttribute("number", Integer.toString(wrongListPerson.size()));
+            xmlWrite.writeStartElement("persone_sbagliate");//open wrong person
+            xmlWrite.writeAttribute("numero", Integer.toString(wrongListPerson.size()));
             for (int i = 0; i < wrongListPerson.size(); i++) {//print all person
-                xmlWrite.writeStartElement("person");
+                xmlWrite.writeStartElement("persona");
                 xmlWrite.writeAttribute("id", Integer.toString(i));//print id of person
-                xmlWrite.writeStartElement("first_name");
+                xmlWrite.writeStartElement("nome");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getFirstName());//print firstname of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("last_name");
+                xmlWrite.writeStartElement("cognome");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getLastName());//print lastname of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("sex");
+                xmlWrite.writeStartElement("sesso");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getSex());//print sex of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("birthplace");
+                xmlWrite.writeStartElement("comune_nascita");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getCommon());//print birthplace of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("date_of_birth");
+                xmlWrite.writeStartElement("data_nascita");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getDay()+"-"+wrongListPerson.get(i)+
                         "-"+wrongListPerson.get(i).getYear());//print date of birth of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("fiscal_Code");
+                xmlWrite.writeStartElement("codice_fiscale");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getFiscalCode());//print fiscalcode of person
                 xmlWrite.writeEndElement();
                 xmlWrite.writeEndElement();//close person
             }
             xmlWrite.writeEndElement(); //close person
 
-            xmlWrite.writeStartElement("fiscal_Code");//open fiscal Code
-            xmlWrite.writeStartElement("wrong");// open wrong fiscal code
-            xmlWrite.writeAttribute("number", Integer.toString(wrongFiscalCode.size()));
+            xmlWrite.writeStartElement("codici");//open fiscal Code
+            xmlWrite.writeStartElement("invalidi");// open wrong fiscal code
+            xmlWrite.writeAttribute("numero", Integer.toString(wrongFiscalCode.size()));
             for (String print : wrongFiscalCode) {//print all fiscalCode wrong
-                xmlWrite.writeStartElement("code_wrong");
+                xmlWrite.writeStartElement("codice");
                 xmlWrite.writeCharacters(print);
                 xmlWrite.writeEndElement();
             }
             xmlWrite.writeEndElement();//close invalid
-            xmlWrite.writeStartElement("unpaired");//open unpaired
-            xmlWrite.writeAttribute("number", Integer.toString(unpairedFiscalCode.size()));
+            xmlWrite.writeStartElement("spaiati");//open unpaired
+            xmlWrite.writeAttribute("numero", Integer.toString(unpairedFiscalCode.size()));
             for (String print : unpairedFiscalCode) {//print all fiscalCode unpaired
-                xmlWrite.writeStartElement("code_unpaired");
+                xmlWrite.writeStartElement("codice");
                 xmlWrite.writeCharacters(print);
                 xmlWrite.writeEndElement();
             }
