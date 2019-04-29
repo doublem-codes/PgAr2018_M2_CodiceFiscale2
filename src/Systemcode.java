@@ -477,20 +477,20 @@ public class Systemcode {
             xmlWrite = xmlOut.createXMLStreamWriter(new FileOutputStream(nameFile), encoding);
             xmlWrite.writeStartDocument("utf-8", "1.0");
         } catch (Exception e) {
-            System.out.println("Error writer:");
+            System.out.println("Error_writer:");
             System.out.println(e.getMessage());
         }
         try {
             xmlWrite.writeStartElement("output"); // open tag xml
-            xmlWrite.writeStartElement("person wright");//open right person
+            xmlWrite.writeStartElement("person_wright");//open right person
             xmlWrite.writeAttribute("number", Integer.toString(arrayListPerson.size()));
             for (int i = 0; i < arrayListPerson.size(); i++) {//print all person
                 xmlWrite.writeStartElement("person");
                 xmlWrite.writeAttribute("id", Integer.toString(i));//print id of person
-                xmlWrite.writeStartElement("first name");
+                xmlWrite.writeStartElement("first_name");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getFirstName());//print firstname of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("last name");
+                xmlWrite.writeStartElement("last_name");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getLastName());//print lastname of person
                 xmlWrite.writeEndElement();
                 xmlWrite.writeStartElement("sex");
@@ -499,26 +499,26 @@ public class Systemcode {
                 xmlWrite.writeStartElement("birthplace");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getCommon());//print birthplace of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("date of birth");
+                xmlWrite.writeStartElement("date_of_birth");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getDay()+"-"+arrayListPerson.get(i).getMonth()+
                         "-"+arrayListPerson.get(i).getYear());//print date of birth of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("fiscal Code");
+                xmlWrite.writeStartElement("fiscal_Code");
                 xmlWrite.writeCharacters(arrayListPerson.get(i).getFiscalCode());//print fiscalcode of person
                 xmlWrite.writeEndElement();
                 xmlWrite.writeEndElement();//close person
             }
             xmlWrite.writeEndElement(); //close right person
 
-            xmlWrite.writeStartElement("person wrong");//open wrong person
+            xmlWrite.writeStartElement("person_wrong");//open wrong person
             xmlWrite.writeAttribute("number", Integer.toString(wrongListPerson.size()));
             for (int i = 0; i < wrongListPerson.size(); i++) {//print all person
                 xmlWrite.writeStartElement("person");
                 xmlWrite.writeAttribute("id", Integer.toString(i));//print id of person
-                xmlWrite.writeStartElement("first name");
+                xmlWrite.writeStartElement("first_name");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getFirstName());//print firstname of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("last name");
+                xmlWrite.writeStartElement("last_name");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getLastName());//print lastname of person
                 xmlWrite.writeEndElement();
                 xmlWrite.writeStartElement("sex");
@@ -527,22 +527,22 @@ public class Systemcode {
                 xmlWrite.writeStartElement("birthplace");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getCommon());//print birthplace of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("date of birth");
+                xmlWrite.writeStartElement("date_of_birth");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getDay()+"-"+wrongListPerson.get(i)+
                         "-"+wrongListPerson.get(i).getYear());//print date of birth of person
                 xmlWrite.writeEndElement();
-                xmlWrite.writeStartElement("fiscal Code");
+                xmlWrite.writeStartElement("fiscal_Code");
                 xmlWrite.writeCharacters(wrongListPerson.get(i).getFiscalCode());//print fiscalcode of person
                 xmlWrite.writeEndElement();
                 xmlWrite.writeEndElement();//close person
             }
             xmlWrite.writeEndElement(); //close person
 
-            xmlWrite.writeStartElement("fiscal Code");//open fiscal Code
+            xmlWrite.writeStartElement("fiscal_Code");//open fiscal Code
             xmlWrite.writeStartElement("wrong");// open wrong fiscal code
             xmlWrite.writeAttribute("number", Integer.toString(wrongFiscalCode.size()));
             for (String print : wrongFiscalCode) {//print all fiscalCode wrong
-                xmlWrite.writeStartElement("code wrong");
+                xmlWrite.writeStartElement("code_wrong");
                 xmlWrite.writeCharacters(print);
                 xmlWrite.writeEndElement();
             }
@@ -550,7 +550,7 @@ public class Systemcode {
             xmlWrite.writeStartElement("unpaired");//open unpaired
             xmlWrite.writeAttribute("number", Integer.toString(unpairedFiscalCode.size()));
             for (String print : unpairedFiscalCode) {//print all fiscalCode unpaired
-                xmlWrite.writeStartElement("code unpaired");
+                xmlWrite.writeStartElement("code_unpaired");
                 xmlWrite.writeCharacters(print);
                 xmlWrite.writeEndElement();
             }
@@ -564,7 +564,7 @@ public class Systemcode {
 
         } catch (Exception e) {
 
-            System.out.println("Error write");
+            System.out.println("Error_write");
             System.out.println(e.getMessage());
             return false;
         }
